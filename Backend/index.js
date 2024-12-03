@@ -3,17 +3,21 @@ if(process.env.NODE_ENV != 'production') {
 }
 
 const notesController = require('./controllers/controller');
+const userController = require('./controllers/userController');
 const cors = require('cors');
 const express = require('express');
-const connectdb = require('./config/connectdb');
+const connectDb = require('./config/connectdb');
 const app = express();
  
 
 app.use(express.json());
 app.use(cors());
 
-connectdb();
+connectDb();
 
+app.post('/signup', userController.signup);
+app.post('/login', userController.login);
+app.get('/logout', userController.logout);
 app.get('/notes', notesController.fetchNotes);
 app.get('/notes/:id', notesController.fetchNote);
 app.post('/notes', notesController.createNote);
