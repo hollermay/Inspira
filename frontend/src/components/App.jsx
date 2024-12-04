@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './LandingPage';
 import TemplateManagementPage from './TemplateManagementPage';
+import Features from './Features';
 
 function App() {
     return (

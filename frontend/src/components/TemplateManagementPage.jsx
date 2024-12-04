@@ -38,10 +38,9 @@ function TemplateManagementPage() {
     };
 
     return (
-        <div>
-            <h1>Template Management</h1>
+        <div className='justify-center items-center'>
+            <h1 className='text-3xl font-black'>Template Management</h1>
 
-            {/* Create Template Form */}
             <h2>Create Gitignore Template</h2>
             <form onSubmit={handleCreateTemplate}>
                 <input
@@ -60,7 +59,6 @@ function TemplateManagementPage() {
                 <button type="submit">Create Template</button>
             </form>
 
-            {/* Display Templates */}
             <h2>Existing Templates</h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
                 {store.templates?.map((template) => (
@@ -68,15 +66,13 @@ function TemplateManagementPage() {
                         <h3>{template.name}</h3>
                         <pre style={styles.pre}>{template.content}</pre>
                         <div style={styles.cardFooter}>
-                            <button
+                            <button className='py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none'
                                 onClick={() => store.toggleUpdate(template)} 
-                                style={styles.button}
                             >
                                 Update
                             </button>
-                            <button
+                            <button className='py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none'
                                 onClick={() => store.deleteTemplate(template._id)}  
-                                style={styles.button}
                             >
                                 Delete
                             </button>
@@ -89,7 +85,7 @@ function TemplateManagementPage() {
             {store.updateForm._id && (
                 <div>
                     <h2>Update Gitignore Template</h2>
-                    <form onSubmit={handleUpdateTemplate}>
+                    <form onSubmit={handleUpdateTemplate} className=''>
                         <input
                             type="text"
                             name="name"
