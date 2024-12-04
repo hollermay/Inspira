@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
-import useTemplateStore from '../stores/templateStore'; // Assuming you have this store
+import useTemplateStore from '../stores/templateStore';
 
 function TemplateManagementPage() {
     const store = useTemplateStore();
 
-    // Fetch templates on page load
+  
     useEffect(() => {
         const fetchTemplates = async () => {
             try {
-                await store.fetchTemplates(); // Fetch templates for management
+                await store.fetchTemplates(); 
             } catch (error) {
                 console.error('Error fetching templates:', error);
             }
@@ -17,21 +17,21 @@ function TemplateManagementPage() {
         fetchTemplates();
     }, [store]);
 
-    // Handle create template form submission
+
     const handleCreateTemplate = async (event) => {
-        event.preventDefault(); // Prevent default form submission behavior
+        event.preventDefault(); 
         try {
-            await store.createTemplate(event);  // Call the createTemplate function from the store
+            await store.createTemplate(event);  
         } catch (error) {
             console.error('Error creating template:', error);
         }
     };
 
-    // Handle update template form submission
+
     const handleUpdateTemplate = async (event) => {
-        event.preventDefault(); // Prevent default form submission behavior
+        event.preventDefault();
         try {
-            await store.updateTemplate(event);  // Call the updateTemplate function from the store
+            await store.updateTemplate(event);  
         } catch (error) {
             console.error('Error updating template:', error);
         }
@@ -66,16 +66,16 @@ function TemplateManagementPage() {
                 {store.templates?.map((template) => (
                     <div key={template._id} style={styles.card}>
                         <h3>{template.name}</h3>
-                        <pre>{template.content.substring(0, 100)}...</pre>
+                        <pre style={styles.pre}>{template.content}</pre>
                         <div style={styles.cardFooter}>
                             <button
-                                onClick={() => store.toggleUpdate(template)}  // Pre-fill the update form
+                                onClick={() => store.toggleUpdate(template)} 
                                 style={styles.button}
                             >
                                 Update
                             </button>
                             <button
-                                onClick={() => store.deleteTemplate(template._id)}  // Delete the template
+                                onClick={() => store.deleteTemplate(template._id)}  
                                 style={styles.button}
                             >
                                 Delete
@@ -85,7 +85,7 @@ function TemplateManagementPage() {
                 ))}
             </div>
 
-            {/* Update Template Form */}
+          
             {store.updateForm._id && (
                 <div>
                     <h2>Update Gitignore Template</h2>
@@ -129,6 +129,17 @@ const styles = {
         border: 'none',
         borderRadius: '4px',
         textDecoration: 'none',
+        marginRight: '10px', 
+    },
+    pre: {
+        backgroundColor: '#f4f4f4', 
+        padding: '10px',
+        borderRadius: '4px',
+        fontFamily: 'monospace',
+        whiteSpace: 'pre-wrap',
+        wordBreak: 'break-word', 
+        maxHeight: '150px', 
+        overflowY: 'auto',
     }
 };
 
