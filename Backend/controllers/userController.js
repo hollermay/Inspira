@@ -1,11 +1,11 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
-
+const jwt = require("jsonwebtoken");
 async function signup(req, res){
     try{
     const {email, password} = req.body;
 
-    const hashedPass = await bcrypt.hash('holler', 10);
+    const hashedPass = await bcrypt.hash(password, 10);
 
     await User.create({email, password: hashedPass});
 
@@ -22,34 +22,28 @@ async function signup(req, res){
 
 }
 
-function login(req, res){
-    const {email, password} = req.body;
+async function login(req, res){
+    try {
+        const {email, password} = req.body;
 
-    const user = User
-    .findOne({email})
-    .then(user => {
-        if(!user){
-            res.sendStatus(404);
-            console.log('User not found');
-        } else {
-            bcrypt.compare(password, user.password, (err, result) => {
-                if(err){
-                    res.sendStatus(500);
-                    console.log('Error comparing passwords');
-                } else if(result){
-                    res.sendStatus(200);
-                    console.log('User logged in');
-                } else {
-                    res.sendStatus(401);
-                    console.log('Incorrect password');
-                }
-            });
-        }
-    })
-    .catch(err => {
-        res.sendStatus(500);
-        console.log('Error finding user');
-    });
+        const user = await User.findOne({email});
+        if(!user) return res.status(400).send('User not found');
+
+        const matchedPassword = await bcrypt.compare(password, user.password);
+        if(!matchedPassword) return res.status(400).send('Invalid password');
+
+        const exp = Date.now() + 1000 * 60 * 60 * 24;
+
+        var token = jwt.sign({sub: user._id, exp}, process.env.SECRET);
+        if (!token) return res.status(400).send('Token generation failed');
+
+        res.cookie('Authorization', token, {expires: new Date(exp), httpOnly: true, secure: true, sameSite: 'none'});
+
+        res.status(200).json({ token });
+    } catch (error) {
+        res.status(500).send('Internal server error');
+        console.error('Error during login:', error);
+    }
 }
 
 function logout(req, res){
@@ -58,11 +52,24 @@ function logout(req, res){
 
 }
 
+function checkAuth(req, res, next){
+    const token = req.cookies.Authorization;
+    if(!token) return res.status(401).send('Unauthorized');
+    jwt.verify(token, process.env.SECRET, (err, user) => {
+        if(err) return res.status(403).send('Forbidden');
+        req.user = user;
+        next();
+    });
+
+    res.sendStatus(200);
+}
+
 
 
 
 module.exports = {
     signup,
     login,
-    logout
+    logout,
+    checkAuth
 }

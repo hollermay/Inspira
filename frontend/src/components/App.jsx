@@ -1,57 +1,73 @@
-import {useEffect } from 'react'
-
-import useNotesStore from '../stores/notesStore'
-
+import { useEffect } from 'react';
+import useTemplateStore from '../stores/templateStore'; // Updated to use the template store
 
 function App() {
-  const store = useNotesStore();
+  const store = useTemplateStore();
 
- 
+
   useEffect(() => {
-    store.fetchNotes();
-  }, []);
-
-
-
+    store.fetchTemplates();
+  }, []); 
 
   return (
     <>
       <div>
-      <h2>Notes:</h2>
-      <ul>
-        {store.notes && store.notes.map((note) => (
-          <li key={note._id}>
-            <h3>{note.title}</h3>
-            <p>{note.body}</p>
-            <button onClick={() => store.deleteNote(note._id)}> Delete</button>
-            <button onClick={() => store.toggleUpdate(note)}>Update</button>
-          </li>
-        ))}
-      </ul>
-
-
-      </div> 
-
-      {store.updateForm._id &&  (<div>
-        <h2>Update Note</h2>
-        <form onSubmit={store.updateNote}>
-          <input onChange={store.handleUpdate} value={store.updateForm.title} name='title' type="text" placeholder="Title" />
-          <textarea onChange={store.handleUpdate} value={store.updateForm.body} name='body' placeholder="Body" />
-          <button type="submit">Update Note</button>
-        </form>
-      </div>)}
-
-      <div>
-        <h2> Create Note</h2>
-        <form onSubmit={store.createNote}>
-          <input onChange={store.updateCreateForm} value={store.createForm.title} name='title' type="text" placeholder="Title" />
-          <textarea onChange={store.updateCreateForm} value={store.createForm.body} name='body' placeholder="Body" />
-          <button type='submit'>Submit</button>
-        </form>
+        <h2>Gitignore Templates:</h2>
+        <ul>
+          {store.templates?.map((template) => (
+            <li key={template._id}>
+              <h3>{template.name}</h3>
+              <pre>{template.content}</pre>
+              <button onClick={() => store.deleteTemplate(template._id)}>Delete</button>
+              <button onClick={() => store.toggleUpdate(template)}>Update</button>
+            </li>
+          ))}
+        </ul>
       </div>
 
+      {store.updateForm._id && (
+        <div>
+          <h2>Update Gitignore Template</h2>
+          <form onSubmit={store.updateTemplate}>
+            <input
+              type="text"
+              name="name"
+              value={store.updateForm.name}
+              onChange={store.handleUpdateFieldChange}
+              placeholder="Template Name"
+            />
+            <textarea
+              name="content"
+              value={store.updateForm.content}
+              onChange={store.handleUpdateFieldChange}
+              placeholder="Gitignore Content"
+            />
+            <button type="submit">Update Template</button>
+          </form>
+        </div>
+      )}
+
+      <div>
+        <h2>Create Gitignore Template</h2>
+        <form onSubmit={store.createTemplate}>
+          <input
+            type="text"
+            name="name"
+            value={store.createForm.name}
+            onChange={store.updateCreateFormField}
+            placeholder="Template Name"
+          />
+          <textarea
+            name="content"
+            value={store.createForm.content}
+            onChange={store.updateCreateFormField}
+            placeholder="Gitignore Content"
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </>
-  )
+  );
 }
 
 export default App;
