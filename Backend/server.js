@@ -9,6 +9,7 @@ const cors = require('cors');
 const express = require('express');
 const connectDb = require('./config/connectdb');
 const app = express();
+const authenticateToken = require('./middleware/requireAuth');
 
 // Middleware
 app.use(express.json());
@@ -16,6 +17,11 @@ app.use(cookieParser());
 app.use(cors());
 
 connectDb();
+app.post("/signup", userController.signup);
+app.post("/login", userController.login);
+app.post("/logout", userController.logout);
+
+
 
 app.get('/templates', templateController.fetchTemplates);  
 app.get('/templates/:id', templateController.fetchTemplate);

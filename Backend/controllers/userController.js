@@ -22,29 +22,37 @@ async function signup(req, res){
 
 }
 
-async function login(req, res){
+const login = async (req, res) => {
     try {
-        const {email, password} = req.body;
+        const { email, password } = req.body;
+        console.log("Login request body:", req.body);
 
-        const user = await User.findOne({email});
-        if(!user) return res.status(400).send('User not found');
+        if (!email || !password) {
+            console.log("Missing email or password");
+            return res.status(400).json({ message: "Email and password are required" });
+        }
 
-        const matchedPassword = await bcrypt.compare(password, user.password);
-        if(!matchedPassword) return res.status(400).send('Invalid password');
+        const user = await User.findOne({ email });
+        if (!user) {
+            console.log("User not found");
+            return res.status(400).json({ message: "Invalid email or password" });
+        }
 
-        const exp = Date.now() + 1000 * 60 * 60 * 24;
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            console.log("Invalid password");
+            return res.status(401).json({ message: "Invalid email or password" });
+        }
 
-        var token = jwt.sign({sub: user._id, exp}, process.env.SECRET);
-        if (!token) return res.status(400).send('Token generation failed');
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        console.log("Token generated:", token);
 
-        res.cookie('Authorization', token, {expires: new Date(exp), httpOnly: true, secure: true, sameSite: 'none'});
-
-        res.status(200).json({ token });
+        res.status(200).json({ token, user: { id: user._id, email: user.email } });
     } catch (error) {
-        res.status(500).send('Internal server error');
-        console.error('Error during login:', error);
+        console.error("Error during login:", error);
+        res.status(500).json({ message: "Internal server error", error: error.message });
     }
-}
+};
 
 function logout(req, res){
     res.sendStatus(200);
@@ -63,6 +71,7 @@ function checkAuth(req, res, next){
 
     res.sendStatus(200);
 }
+
 
 
 

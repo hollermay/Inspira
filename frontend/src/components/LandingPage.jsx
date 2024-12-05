@@ -9,10 +9,8 @@ function LandingPage() {
     
     return (
         <div>
-            <Navbar />
             <Hero />
             <Features />
-
             <Templates />
             <Clients />
             <Faqs />
