@@ -1,75 +1,54 @@
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
-const jwt = require("jsonwebtoken");
-async function signup(req, res){
-    try{
-    const {email, password} = req.body;
 
-    const hashedPass = await bcrypt.hash(password, 10);
+exports.signup = async (req, res) => {
+    const { email, password } = req.body;
 
-    await User.create({email, password: hashedPass});
-
-
-
-
-    res.sendStatus(200);
-    console.log('User created');
-    } catch{
-        res.sendStatus(400);
-        console.log('Error creating user');
-    }
-
-
-}
-
-async function login(req, res){
     try {
-        const {email, password} = req.body;
-
-        const user = await User.findOne({email});
-        if(!user) return res.status(400).send('User not found');
-
-        const matchedPassword = await bcrypt.compare(password, user.password);
-        if(!matchedPassword) return res.status(400).send('Invalid password');
-
-        const exp = Date.now() + 1000 * 60 * 60 * 24;
-
-        var token = jwt.sign({sub: user._id, exp}, process.env.SECRET);
-        if (!token) return res.status(400).send('Token generation failed');
-
-        res.cookie('Authorization', token, {expires: new Date(exp), httpOnly: true, secure: true, sameSite: 'none'});
-
-        res.status(200).json({ token });
-    } catch (error) {
-        res.status(500).send('Internal server error');
-        console.error('Error during login:', error);
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ email, password: hashedPassword });
+        await newUser.save();
+        res.status(201).json({ message: "User registered successfully" });
+        
+    } catch (err) {
+        res.status(500).json({ message: "Error creating user", error: err.message });
     }
-}
+};
 
-function logout(req, res){
-    res.sendStatus(200);
-    console.log('User logged out');
+exports.login = async (req, res) => {
 
-}
+    try {
+        const { email, password } = req.body;
+        console.log("Login request received:", email);
 
-function checkAuth(req, res, next){
-    const token = req.cookies.Authorization;
-    if(!token) return res.status(401).send('Unauthorized');
-    jwt.verify(token, process.env.SECRET, (err, user) => {
-        if(err) return res.status(403).send('Forbidden');
-        req.user = user;
-        next();
-    });
+        if (!email || !password) {
+            console.log("Missing email or password");
+            return res.status(400).json({ message: "Email and password are required" });
+        }
 
-    res.sendStatus(200);
-}
+        const user = await User.findOne({ email });
+        if (!user) {
+            console.log("User not found");
+            return res.status(400).json({ message: "Invalid email or password" });
+        }
 
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            console.log("Invalid password");
+            return res.status(401).json({ message: "Invalid email or password" });
+        }
 
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        console.log("Token generated successfully");
 
+        res.status(200).json({ token, user: { id: user._id, email: user.email } });
+    } catch (err) {
+        console.error("Error during login:", err.message);
+        res.status(500).json({ message: "Internal server error", error: err.message });
+    }
+};
 
-module.exports = {
-    signup,
-    login,
-    logout,
-    checkAuth
-}
+exports.logout = (req, res) => {
+    res.status(200).json({ message: "Logged out successfully" });
+};

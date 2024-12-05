@@ -1,13 +1,14 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-function requireAuth(req, res, next) {
-    const token = req.cookies.Authorization;
-    if (!token) return res.status(401).send('Unauthorized');
-    jwt.verify(token, process.env.SECRET, (err, user) => {
-        if (err) return res.status(403).send('Forbidden');
-        req.user = user;
+const authenticateToken = (req, res, next) => {
+    const token = req.headers.authorization?.split(" ")[1]; 
+    if (!token) return res.status(401).json({ message: "Unauthorized: No token provided" });
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ message: "Invalid token" });
+        req.user = user; 
         next();
     });
-}
+};
 
-module.exports = requireAuth;
+module.exports = authenticateToken;

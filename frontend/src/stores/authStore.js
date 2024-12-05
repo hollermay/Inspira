@@ -1,64 +1,40 @@
 import { create } from "zustand";
-import axios from "axios";
+import api from "../api/api";
 
 const useAuthStore = create((set) => ({
     user: null,
-    
-    loginForm: {
-        email: "",
-        password: "",
-    },
-    
-    registerForm: {
-        email: "",
-        password: "",
-    },
-    
+    loginForm: { email: "", password: "" },
+    signupForm: { email: "", password: "" },
     updateLoginForm: (e) => {
         const { name, value } = e.target;
-    
         set((state) => ({
-        loginForm: {
-            ...state.loginForm,
-            [name]: value,
-        },
+            loginForm: { ...state.loginForm, [name]: value },
         }));
     },
-    
-    updateRegisterForm: (e) => {
+    updateSignupForm: (e) => {
         const { name, value } = e.target;
-    
         set((state) => ({
-        registerForm: {
-            ...state.registerForm,
-            [name]: value,
-        },
+            signupForm: { ...state.signupForm, [name]: value },
         }));
     },
-    
     login: async (e) => {
         e.preventDefault();
-    
         const { loginForm } = useAuthStore.getState();
-        const res = await axios.post("http://localhost:3000/login", loginForm);
-    
-        set({ user: res.data.user });
+        const { data } = await api.post("/login", loginForm);
+        localStorage.setItem("token", data.token);
+        set({ user: data.user });
     },
-    
     signup: async (e) => {
         e.preventDefault();
-    
-        const { registerForm } = useAuthStore.getState();
-        const res = await axios.post("http://localhost:3000/signup", registerForm);
-    
-        set({ user: res.data.user });
+        const { signupForm } = useAuthStore.getState();
+        const { data } = await api.post("/signup", signupForm);
+        localStorage.setItem("token", data.token);
+        set({ user: data.user });
     },
-    
-    logout: async () => {
-        await axios.post("http://localhost:3000/logout");
-    
+    logout: () => {
+        localStorage.removeItem("token");
         set({ user: null });
     },
-    }));
+}));
 
 export default useAuthStore;
