@@ -54,7 +54,7 @@ function TemplateGallery() {
                         <div className="p-4 md:p-5 flex-grow">
                             <h3 className="text-lg font-bold text-gray-800">{template.name}</h3>
                             <p className="mt-1 text-gray-500">
-                                {template.content.substring(0, 40)}...
+                                {template.content.substring(0, 100)}...
                             </p>
                         </div>
                         <div className='flex flex-row justify-center items-center mt-auto p-4'>
