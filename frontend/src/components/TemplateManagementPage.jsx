@@ -44,24 +44,26 @@ function TemplateManagementPage() {
             <h1 className='text-3xl font-black'>Template Management</h1>
 
             <h2>Create Gitignore Template</h2>
-            <form onSubmit={handleCreateTemplate}>
+            <form onSubmit={handleCreateTemplate} className='bg-white p-6 rounded shadow-md w-full max-w-sm'>
                 <input
                     type="text"
                     name="name"
                     value={store.createForm.name}
                     onChange={store.updateCreateFormField}
                     placeholder="Template Name"
+                    className='w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300'
                 />
                 <textarea
                     name="content"
                     value={store.createForm.content}
                     onChange={store.updateCreateFormField}
                     placeholder="Gitignore Content"
+                    className='w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300'
                 />
-                <button type="submit">Create Template</button>
+                <button className='py-2 px-4 inline-flex justify-center items-center gap-x-5 text-sm font-medium rounded-lg border border-transparent bg-rose-600 text-white hover:bg-rose-700 focus:outline-none focus:bg-rose-500-700 disabled:opacity-50 disabled:pointer-events-none' type="submit">Create Template</button>
             </form>
 
-            <h2>Existing Templates</h2>
+            <h2 className=' my-4 text-3xl font-black'>Existing Templates</h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
                 {store.templates?.map((template) => (
                     <div key={template._id} style={styles.card}>
@@ -73,7 +75,7 @@ function TemplateManagementPage() {
                             >
                                 Update
                             </button>
-                            <button className='py-2 px-4 inline-flex justify-center items-center gap-x-5 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none'
+                            <button className='py-2 px-4 inline-flex justify-center items-center gap-x-5 text-sm font-medium rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none'
                                 onClick={() => store.deleteTemplate(template._id)}  
                             >
                                 Delete
