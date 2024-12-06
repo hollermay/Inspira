@@ -1,33 +1,73 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import useContributionStore from "../stores/contribute";
 
 function ContributionForm() {
-    const [formData, setFormData] = useState({ name: "", email: "", templateName: "", content: "" });
+  const store = useContributionStore();
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccess("");
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post('/contributions', formData);
-            alert("Contribution submitted!");
-        } catch (error) {
-            console.error(error);
-            alert("Failed to submit contribution.");
-        }
-    };
+    try {
+      await store.createContribution(e);
+      setSuccess("Contribution submitted successfully!");
+      store.resetForms(); // Reset the form fields after a successful submission
+    } catch (error) {
+      setError("Failed to submit contribution.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <input name="name" placeholder="Your Name" onChange={handleChange} required />
-            <input name="email" placeholder="Your Email" onChange={handleChange} required />
-            <input name="templateName" placeholder="Template Name" onChange={handleChange} required />
-            <textarea name="content" placeholder="Template Content" onChange={handleChange} required />
-            <button type="submit">Submit Contribution</button>
-        </form>
-    );
+  return (
+    <div className="contribution-form">
+      <h2>Contribute to Gitignore</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          value={store.createForm.name}
+          onChange={store.updateCreateFormField} // Corrected handler
+          placeholder="Name"
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          value={store.createForm.email}
+          onChange={store.updateCreateFormField} // Corrected handler
+          placeholder="Email"
+          required
+        />
+        <input
+          type="text"
+          name="templateName"
+          value={store.createForm.templateName}
+          onChange={store.updateCreateFormField} // Corrected handler
+          placeholder="Template Name"
+          required
+        />
+        <textarea
+          name="content"
+          value={store.createForm.content}
+          onChange={store.updateCreateFormField} // Corrected handler
+          placeholder="Gitignore Content"
+          rows="5"
+          required
+        />
+        <button type="submit" disabled={loading}>
+          {loading ? "Submitting..." : "Submit Contribution"}
+        </button>
+      </form>
+      {error && <p className="error-message">{error}</p>}
+      {success && <p className="success-message">{success}</p>}
+    </div>
+  );
 }
 
 export default ContributionForm;

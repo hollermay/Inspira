@@ -5,7 +5,7 @@ const contributionSchema = new mongoose.Schema({
     email: { type: String, required: true }, // Contributor's email
     templateName: { type: String, required: true },
     content: { type: String, required: true },
-    approved: { type: Boolean, default: false }, // Approval status
+    approved: { type: Boolean, default: false },
 });
 
 const Contribution = mongoose.model("Contribution", contributionSchema);

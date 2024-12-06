@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import useTemplateStore from '../stores/templateStore';
-import Approval from './Approval';
+import AdminContributions from './Approval';
 function TemplateManagementPage() {
     const store = useTemplateStore();
 
@@ -39,7 +39,7 @@ function TemplateManagementPage() {
 
     return (
         <>
-        <Approval />
+       
         <div className='justify-center items-center'>
             <h1 className='text-3xl font-black'>Template Management</h1>
 
@@ -105,7 +105,12 @@ function TemplateManagementPage() {
                     </form>
                 </div>
             )}
+
+            
         </div>
+
+
+        <AdminContributions />
         </>
     );
 }
