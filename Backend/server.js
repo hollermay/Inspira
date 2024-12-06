@@ -10,7 +10,7 @@ const express = require('express');
 const connectDb = require('./config/connectdb');
 const app = express();
 const authenticateToken = require('./middleware/requireAuth');
-
+const contributionController = require('./controllers/contributionController');
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
@@ -21,6 +21,9 @@ app.post("/signup", userController.signup);
 app.post("/login", userController.login);
 app.post("/logout", userController.logout);
 
+app.post('/contributions', contributionController.submitContribution);
+app.get('/contributions', contributionController.fetchContributions);
+app.post('/contributions/:id/approve', contributionController.approveContribution);
 
 
 app.get('/templates', templateController.fetchTemplates);  
