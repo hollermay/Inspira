@@ -23,7 +23,7 @@ return (
                         Easy to Use
                     </h3>
                     <p className="mt-1 text-gray-600">
-                        Our intuitive interface makes it simple to generate .gitignore files for any project.
+                        Our intuitive interface makes it simple to find your perfect Inspira and also let you to contribute to our space.
                     </p>
                 </div>
             </div>
@@ -32,10 +32,10 @@ return (
                 <svg className="shrink-0 mt-1 size-6 text-pink-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
                 <div className="grow">
                     <h3 className="text-lg font-semibold text-gray-800">
-                        Customizable Templates
+                        Explore Templates
                     </h3>
                     <p className="mt-1 text-gray-600">
-                        Choose from a wide range of templates or create your own to suit your project's needs.
+                        Choose from a wide range of templates contributed by developers like you!
                     </p>
                 </div>
             </div>
@@ -47,7 +47,7 @@ return (
                         Community Driven
                     </h3>
                     <p className="mt-1 text-gray-600">
-                        Benefit from templates and contributions from a vibrant community of developers.
+                        Contribute your custom .gitignore template and get featured on our page.
                     </p>
                 </div>
             </div>

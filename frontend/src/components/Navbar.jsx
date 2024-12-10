@@ -10,7 +10,7 @@ export default function Navbar() {
         <div className="px-4 md:px-0 flex justify-between items-center">
           <div>
             <Link to="/">
-            <h1 className="font-bold cur" href='/'>GITIGNODO</h1>
+            <h1 className="font-extralight cur" href='/'>Inspira</h1>
             </Link>
           </div>
 
