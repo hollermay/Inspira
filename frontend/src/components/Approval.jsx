@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import contriStore from "../stores/contribute";
+import contriStore from "../stores/contributeStore";
 
 function AdminContributions() {
 
@@ -24,23 +24,7 @@ function AdminContributions() {
     };
 
     fetchContributions();
-  }, [store]);
-
-  const handleApproveContribution = async (id) => {
-    setApproving(id); // Set the current approving ID
-    setError("");
-    setSuccess("");
-
-    try {
-      await store.approveContribution(id);
-      setSuccess("Contribution approved successfully.");
-    } catch (error) {
-      console.error("Error approving contribution:", error);
-      setError("Failed to approve contribution.");
-    } finally {
-      setApproving(null); // Reset the approving ID
-    }
-  };
+  }, []);
 
 return (
     <div className="admin-contributions p-4">
@@ -52,14 +36,13 @@ return (
                 <p className="text-gray-600"><strong>Email:</strong> {contribution.email}</p>
                 <p className="text-gray-600"><strong>Template Name:</strong> {contribution.templateName}</p>
                 <p className="text-gray-600"><strong>Content:</strong></p>
-                <pre className="bg-gray-100 p-2 rounded">{contribution.content}</pre>
+                <pre className="bg-black p-2 text-white rounded">{contribution.content}</pre>
                 <button
-                    onClick={() => handleApproveContribution(contribution._id)}
-                    disabled={approving === contribution._id} // Disable if approving
-                    className={`mt-2 px-4 py-2 rounded ${approving === contribution._id ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-700"} text-white`}
+                    onClick={() => store.approveContribution(contribution._id)} className={`mt-2 px-4 py-2 rounded ${approving === contribution._id ? "bg-gray-400" : "bg-pink-500 hover:bg-pink-700"} text-white`}
                 >
                     {approving === contribution._id ? "Approving..." : "Approve"}
                 </button>
+                <button onClick={() => store.deleteContribution(contribution._id)} className="mt-2 px-4 py-2 rounded bg-red-500 hover:bg-red-700 text-white">Delete</button>
             </div>
         ))}
         {success && <p className="success-message text-green-500">{success}</p>}

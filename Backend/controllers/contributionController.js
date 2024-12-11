@@ -27,6 +27,18 @@ const fetchContributions = async (req, res) => {
     }
 };
 
+const deleteContribution = async (req, res) => {
+    try {
+        const contributionId = req.params.id;
+
+        const contribution = await Contribution.findByIdAndDelete(contributionId);
+
+        res.json({ message: 'Contribution deleted' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete contribution' });
+    }
+}
+
 
 const approveContribution = async (req, res) => {
     try {
@@ -38,13 +50,14 @@ const approveContribution = async (req, res) => {
             return res.status(404).json({ error: 'Contribution not found' });
         }
 
-        const template = await Template.create({
-            name: contribution.templateName,
+        const template = await Template.push({
+            templateName: contribution.templateName,
             content: contribution.content,
         });
 
         contribution.approved = true;
         await contribution.save();
+        await template.save();
 
         res.json({ message: 'Contribution approved and added to templates', template });
     } catch (error) {
@@ -56,4 +69,5 @@ module.exports = {
     submitContribution,
     fetchContributions,
     approveContribution,
+    deleteContribution
 };

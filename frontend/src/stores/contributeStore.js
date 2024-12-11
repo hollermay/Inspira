@@ -19,6 +19,7 @@ const contriStore = create((set) => ({
     content: "",
     approved: false,
   },
+  
 
   fetchContributions: async () => {
     try {
@@ -27,17 +28,6 @@ const contriStore = create((set) => ({
     } catch (error) {
       console.error("Error fetching contributions:", error);
     }
-  },
-
-  updateCreateFormField: (e) => {
-    const { name, value } = e.target;
-
-    set((state) => ({
-      createForm: {
-        ...state.createForm,
-        [name]: value,
-      },
-    }));
   },
 
   createContribution: async (e) => {
@@ -63,8 +53,10 @@ const contriStore = create((set) => ({
   deleteContribution: async (_id) => {
     try {
       await api.delete(`/contributions/${_id}`);  // Use api instance
+
       const { contributions } = contriStore.getState();
       const newContributions = contributions.filter((contribution) => contribution._id !== _id);
+
       set({ contributions: newContributions });
     } catch (error) {
       console.error("Error deleting contribution:", error);
@@ -95,6 +87,7 @@ const contriStore = create((set) => ({
     });
   },
 
+
   updateContribution: async (e) => {
     e.preventDefault();
 
@@ -110,7 +103,7 @@ const contriStore = create((set) => ({
         templateName,
         content,
         approved,
-      });  // Use api instance
+      });
 
       const newContributions = [...contributions];
       const contributionIndex = contributions.findIndex((contribution) => contribution._id === _id);
@@ -131,6 +124,34 @@ const contriStore = create((set) => ({
       console.error("Error updating contribution:", error);
     }
   },
+
+  updateCreateFormField: (e) => {
+    const { name, value } = e.target;
+
+    set((state) => ({
+      createForm: {
+        ...state.createForm,
+        [name]: value,
+      },
+    }));
+  },
+
+  approveContribution: async (_id) => {
+  try {
+    const { contributions } = contriStore.getState();
+    const contribution = contributions.find((contribution) => contribution._id === _id);
+
+    if (contribution) {
+      const { name, content } = contribution;
+      await api.post("/templates", { name, content });  // Use api instance
+      console.log("Successfully pushed to template database");
+    } else {
+      console.error("Contribution not found");
+    }
+  } catch (error) {
+    console.error("Error pushing to template database:", error);
+  }
+  }
 }));
 
 export default contriStore ;

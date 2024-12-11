@@ -23,7 +23,7 @@ app.post("/logout", userController.logout);
 
 app.post('/contributions', contributionController.submitContribution);
 app.get('/contributions', contributionController.fetchContributions);
-app.post('/contributions/:id/approve', contributionController.approveContribution);
+app.delete('/contributions/:id', contributionController.deleteContribution);
 
 
 app.get('/templates', templateController.fetchTemplates);  

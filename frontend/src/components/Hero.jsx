@@ -3,15 +3,12 @@ export default function Hero() {
 return (
     <>
 
-<div>
-
-  <div aria-hidden="true" className="flex absolute -top-96 start-1/2 transform -translate-x-1/2">
-    <div className="bg-gradient-to-r from-pink-700/50 to-pink-100 blur-3xl w-[25rem] h-[44rem] rotate-[-60deg] transform -translate-x-[10rem]"></div>
-    <div className="bg-gradient-to-tl from-pink-600 via-red-100 to-pink-50 blur-3xl w-[60rem] h-[50rem] rounded-full origin-top-left -rotate-12 -translate-x-[15rem]"></div>
-  </div>
-
-  <div className="relative z-10">
-    <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
+  <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16 ">
+  ` <div aria-hidden="true" className="flex absolute -top-96 start-1/2 transform -translate-x-1/2">
+      <div className="bg-gradient-to-r from-pink-700/50 to-pink-100 blur-3xl w-[25rem] h-[44rem] rotate-[-60deg] transform -translate-x-[10rem]"></div>
+      <div className="bg-gradient-to-tl from-pink-600 via-red-100 to-pink-50 blur-3xl w-[60rem] h-[50rem] rounded-full origin-top-left -rotate-12 -translate-x-[15rem]"></div>
+    </div>
+    <div className="relative z-10">
       <div className="max-w-2xl text-center mx-auto">
         <p className="inline-block text-sm font-medium bg-clip-text bg-gradient-to-l from-pink-600 to-pink-500 text-transparent">
           Inspira: Workflows Simplified
@@ -30,7 +27,7 @@ return (
       </div>
     </div>
   </div>
-</div>
+
 
     </>
   )
