@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import useTemplateStore from '../stores/templateStore';
-
+import { useNavigate } from 'react-router-dom';
 function TemplateGallery() {
     const store = useTemplateStore();
     const [searchQuery, setSearchQuery] = useState('');
@@ -15,30 +15,23 @@ function TemplateGallery() {
         };
 
         fetchTemplates();
-    }, [store]);
+    }, []);
 
-    const downloadTemplate = (template) => {
-        const blob = new Blob([template.content], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `${template.name}.gitignore`; 
-        link.click();
-        URL.revokeObjectURL(url); 
-    };
+    
 
     const filteredTemplates = store.templates?.filter(template =>
         template.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    const navigate = useNavigate();
+    
+    const openPage = (templateId) => {
+       navigate(`/templates/${templateId}`);
+    };
+
+
     return (
-        <div>
-            <div aria-hidden="true" className="flex absolute -top-96 start-1/2 transform -translate-x-1/2">
-                <div className="bg-gradient-to-r from-pink-400/50 to-pink-100 blur-3xl w-[25rem] h-[44rem] rotate-[-60deg] transform -translate-x-[10rem]"></div>
-                <div className="bg-gradient-to-tl from-pink-500 via-red-100 to-pink-50 blur-3xl w-[60rem] h-[50rem] rounded-full origin-top-left -rotate-12 -translate-x-[15rem]"></div>
-            </div>
-
-
+        <>
         <div className="flex flex-col items-center relative z-10">
             <input
                 type="text"
@@ -57,18 +50,19 @@ function TemplateGallery() {
                                 {template.content.substring(0, 100)}...
                             </p>
                         </div>
-                        <div className='flex flex-row justify-center items-center mt-auto p-4'>
-                            <button 
-                                onClick={() => downloadTemplate(template)} 
-                                className="py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-pink-600 text-white hover:bg-pink-700 focus:outline-none focus:bg-pink-700 disabled:opacity-50 disabled:pointer-events-none">
-                                Download
+                        <div className='flex flex-row justify-center items-center mt-auto p-4 gap-x-4'>
+                            <button className=' py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-small rounded-lg border border-pink-600 text-pink-600' onClick={() => openPage(template._id)}>
+                                View
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg> 
                             </button>
                         </div>
                     </div>
                 ))}
             </div>
         </div>
-        </div>
+        </>
     );
 }
 

@@ -3,7 +3,7 @@ import axios from "axios";
 
 const useTemplateStore = create((set) => ({
   templates: null,
-
+  template: null,
   createForm: {
     name: "",
     content: "",
@@ -21,6 +21,12 @@ const useTemplateStore = create((set) => ({
 
     // Set to state
     set({ templates: res.data.templates });
+  },
+
+  fetchTemplate: async (_id) => {
+        const res = await axios.get(`http://localhost:3000/templates/${_id}`);
+        
+        set({ template: res.data.template });
   },
 
   updateCreateFormField: (e) => {

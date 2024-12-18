@@ -7,6 +7,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import ContributionForm from "./Contribute";
 import Gallery from "./Gallery";
+import SelfPage from "./SelfPage";
 function App() {
   const { user } = useAuthStore();
 
@@ -20,6 +21,8 @@ function App() {
           <Route path="/admin" element={user ? <TemplateManagementPage /> : <Navigate to="/login" />} />
           <Route path = '/contributions' element = {<ContributionForm />} />
           <Route path = '/gallery' element = {<Gallery />} />
+          <Route path="/templates/:templateId" element={<SelfPage />} />
+          <Route path="*" element={<div>Page not found</div>} />
       </Routes>
     </Router>
   );

@@ -5,7 +5,13 @@ export default function Navbar() {
   const { user, logout } = useAuthStore();
 
   return (
+    <>
+    <div aria-hidden="true" className="flex absolute -top-96 start-1/2 transform -translate-x-1/2">
+      <div className="bg-gradient-to-r from-pink-700/50 to-pink-100 blur-3xl w-[25rem] h-[44rem] rotate-[-60deg] transform -translate-x-[10rem]"></div>
+      <div className="bg-gradient-to-tl from-pink-600 via-red-100 to-pink-50 blur-3xl w-[60rem] h-[50rem] rounded-full origin-top-left -rotate-12 -translate-x-[15rem]"></div>
+    </div>
     <header className="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full text-sm">
+      
       <nav className="mt-4 relative max-w-2xl w-full bg-white border border-gray-200 rounded-[2rem] mx-2 py-2.5 md:flex md:items-center md:justify-between md:py-0 md:px-4 md:mx-auto">
         <div className="px-4 md:px-0 flex justify-between items-center">
           <div>
@@ -110,5 +116,6 @@ export default function Navbar() {
         </div>
       </nav>
     </header>
+    </>
   );
 }
