@@ -1,6 +1,6 @@
-# GitIgnodo
+# Inspira
 
-GitIgnodo is a web application that allows users to manage and create templates for their projects. The application supports authentication with JWT tokens and provides a simple CRUD (Create, Read, Update, Delete) interface for template management.
+Inspira is a web application that allows users to manage and create templates for their projects. The application supports authentication with JWT tokens and provides a simple CRUD (Create, Read, Update, Delete) interface for template management.
 
 ## Features
 
