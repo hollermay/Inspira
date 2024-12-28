@@ -32,29 +32,38 @@ import useTemplateStore from '../stores/templateStore';
     };
 
       return (
-         <>
+         <div className='relative z-10'>
             {store.template && (
-               <div className="flex flex-col items-center relative z-10 justify-center">
-                  
-                  <div className="flex flex-ro w-full h-auto mt-40">
-                    <h1 className="text-center font-bold text-3xl bg-clip-text bg-gradient-to-l from-pink-600 to-pink-500 text-transparent">
-                     {store.template.name}
-                    </h1>
-                     <div className="p-4 md:p-5">
-                        <h3 className="text-lg font-bold text-gray-800">
+               <div className="flex flex-col items-center justify-center min-h-screen py-12">
+                  <div className="bg-white shadow-md rounded-lg overflow-hidden w-full max-w-4xl">
+                     <div className="bg-gradient-to-r from-pink-600 to-pink-500 p-6">
+                        <h1 className="text-center font-bold text-4xl text-white">
+                           {store.template.name}
+                        </h1>
+                     </div>
+                     <div className="p-6">
+                        <h3 className="text-2xl font-bold text-gray-800 mb-4">
                            {store.template.name}
                         </h3>
-                        <p className="mt-1 text-gray-500">
-                           {store.template.content.substring(0, 100)}...
+                        <p className="text-gray-600 mb-6 rounded-lg p-4 bg-gray-100">
+                           {store.template.content}
                         </p>
+                        <div className='gap-10'>
+                        <button
+                           onClick={() => downloadTemplate(template)}
+                           className="py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-pink-600 text-white hover:bg-pink-700 focus:outline-none focus:bg-pink-700 disabled:opacity-50 disabled:pointer-events-none"
+                        >
+                           Download
+                        </button>
+                        <button className="py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-pink-600 text-white hover:bg-pink-700 focus:outline-none focus:bg-pink-700 disabled:opacity-50 disabled:pointer-events-none">
+                           Share
+                        </button>
+                        </div>
                      </div>
-                     <button onClick={() => downloadTemplate(template)} className="py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-pink-600 text-white hover:bg-pink-700 focus:outline-none focus:bg-pink-700 disabled:opacity-50 disabled:pointer-events-none">
-                        Download
-                    </button>
                   </div>
                </div>
             )}
-         </>
+         </div>
       );
     };
 

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import axios from "axios";
+import api from "../api/api";
 
 const useTemplateStore = create((set) => ({
   templates: null,
@@ -17,14 +17,14 @@ const useTemplateStore = create((set) => ({
 
   fetchTemplates: async () => {
     // Fetch the templates
-    const res = await axios.get("http://localhost:3000/templates");
+    const res = await api.get(`/templates`);
 
     // Set to state
     set({ templates: res.data.templates });
   },
 
   fetchTemplate: async (_id) => {
-        const res = await axios.get(`http://localhost:3000/templates/${_id}`);
+        const res = await api.get(`/templates/${_id}`);
         
         set({ template: res.data.template });
   },
@@ -44,7 +44,7 @@ const useTemplateStore = create((set) => ({
     e.preventDefault();
 
     const { createForm, templates } = useTemplateStore.getState();
-    const res = await axios.post("http://localhost:3000/templates", createForm);
+    const res = await api.post("/templates", createForm);
 
     set({
       templates: [...templates, res.data.template],
@@ -57,7 +57,7 @@ const useTemplateStore = create((set) => ({
 
   deleteTemplate: async (_id) => {
     // Delete the template
-    await axios.delete(`http://localhost:3000/templates/${_id}`);
+    await api.delete(`/templates/${_id}`);
     const { templates } = useTemplateStore.getState();
 
     // Update state
@@ -96,7 +96,7 @@ const useTemplateStore = create((set) => ({
     } = useTemplateStore.getState();
 
     // Send the update request
-    const res = await axios.put(`http://localhost:3000/templates/${_id}`, {
+    const res = await api.put(`/templates/${_id}`, {
       name,
       content,
     });

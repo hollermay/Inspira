@@ -14,7 +14,6 @@ const contributionController = require('./controllers/contributionController');
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
 
 connectDb();
 app.post("/signup", userController.signup);
@@ -37,3 +36,18 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+const allowedOrigins = [process.env.FRONTEND_URL, 'http://localhost:3000'];
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+};
+
+app.use(cors(corsOptions));

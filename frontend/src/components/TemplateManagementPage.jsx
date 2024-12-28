@@ -39,7 +39,7 @@ function TemplateManagementPage() {
 
     return (
         <>
-            <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center relative z-10'>
                 <h1 className='mt-6 text-3xl font-black'>Template Management</h1>
 
                 <h2>Create Gitignore Template</h2>
