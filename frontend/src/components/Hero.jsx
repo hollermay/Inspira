@@ -12,12 +12,12 @@ return (
 
         <div className="mt-5 max-w-2xl">
           <h1 className="block font-semibold text-gray-800 text-4xl md:text-5xl lg:text-6xl">
-            Welcome to <span className='font-extralight'>Inspira: </span>The Ultimate Collection to find your perfect Project Templates
+            Welcome to <span className='font-extralight'>Inspira: </span>The Ultimate Collection to find your perfect Template
           </h1>
         </div>
 
         <div className="mt-5 max-w-3xl">
-          <p className="text-lg text-gray-600">Find the perfect .gitignore template for your project. Save time and ensure your repository is clean and efficient.</p>
+          <p className="text-lg text-gray-600">Find the perfect templates for your project. Save time and ensure your repository is clean and efficient.</p>
         </div>
 
       </div>
