@@ -12,7 +12,7 @@ return (
 
         <div className="mt-5 max-w-2xl">
           <h1 className="block font-semibold text-gray-800 text-4xl md:text-5xl lg:text-6xl">
-            Welcome to <span className='font-extralight'>Inspira: </span>The Ultimate Collection of .gitignore Templates
+            Welcome to <span className='font-extralight'>Inspira: </span>The Ultimate Collection to find your perfect Project Templates
           </h1>
         </div>
 

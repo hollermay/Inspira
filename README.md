@@ -1,20 +1,40 @@
 # Inspira
 
-Inspira is a web application that allows users to manage and create templates for their projects. The application supports authentication with JWT tokens and provides a simple CRUD (Create, Read, Update, Delete) interface for template management.
+Inspira is a full-stack web application designed to help developers manage and create project templates. With features like JWT-based authentication and a robust CRUD interface, it streamlines template management, including .gitignore, README, and package.json. The platform offers both user and admin functionalities, with an accessible admin dashboard for managing templates.
 
 ## Features
 
 - **User Authentication**: Sign up and log in to access the platform.
-- **Template Management**: Create, update, delete, and view templates.
+- **Template Management**: Comprehensive CRUD operations for creating, updating, deleting, and viewing templates.
+- **Template Contribution**: Users can submit new templates, reviewed by an admin before approval.
+- **Template Gallery**: A searchable, filterable gallery with downloadable templates.
 - **Admin Dashboard**: Access to an admin panel for managing templates.
+- **Role-based Access**: Enhanced security via user roles for admin functionalities.
 
 ## Tech Stack
 
-- **Frontend**: React, Axios, React Router, Zustand
-- **Backend**: Node.js, Express.js, MongoDB, JWT, bcryptjs
-- **Authentication**: JWT (JSON Web Tokens)
-- **Database**: MongoDB (via Mongoose)
-- **Middleware**: Cookie-parser, Cors, JWT verification
+### Frontend
+- React with Tailwind CSS
+- React Router
+- Axios
+- Zustand
+  
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- JWT
+- bcryptjs
+- Cookie-parser & Cors
+- Multer
+
+### Tools Used
+- Git
+- Vercel
+- AWS EC2
+- MongoDB Atlas
+- Postman
+  
 
 ## Installation
 
@@ -69,6 +89,33 @@ npm start
 
 This will start the React development server on http://localhost:5173.
 
+## Folder Structure
+```
+Inspira/
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── server.js
+│   └── .env
+└── frontend/
+    ├── src/
+    │   ├── api/
+    │   ├── components/
+    │   ├── pages/
+    │   ├── stores/
+    │   ├── styles/
+    │   ├── App.jsx
+    │   └── index.js
+    └── public/
+
+
+
+
+```
+
 ## Usage
 
 - **Sign up**: Create a new account by providing your email and password.
@@ -89,6 +136,15 @@ This will start the React development server on http://localhost:5173.
 - **POST /templates**: Creates a new template. Requires authentication (JWT).
 - **PUT /templates/:id**: Updates a template by ID. Requires authentication (JWT).
 - **DELETE /templates/:id**: Deletes a template by ID. Requires authentication (JWT).
+
+## Future Enhancements
+
+- **Template Generator**: to generate custom templates according to the requirements of the 
+user.
+- **Plagiarism Checker**: Any user that sends a contribution request, it will pass through a series of checks to understand if it’s already there on the website or not.
+- **Template Generator**: Generate custom templates tailored to user requirements.
+- **Additional Template Support**: Expand the template gallery with more options for various project types.
+
 
 ## Contributing
 
