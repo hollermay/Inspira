@@ -1,4 +1,5 @@
-![image](https://github.com/user-attachments/assets/6accc5ab-ed27-46d0-a8d9-38b9b4e71945)
+![image](https://github.com/user-attachments/assets/df11ed47-7c5f-4bca-8fcb-44340c9ccdf5)
+
 
 # Inspira
 
