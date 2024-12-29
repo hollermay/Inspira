@@ -4,13 +4,13 @@ const Template = require('../models/template');
 
 const submitContribution = async (req, res) => {
     try {
-        const { name, email, templateName, content } = req.body;
+        const { user, email, name, content } = req.body;
 
-        if (!name || !email || !templateName || !content) {
+        if (!user || !email || !name || !content) {
             return res.status(400).json({ error: 'All fields are required' });
         }
 
-        const contribution = await Contribution.create({ name, email, templateName, content });
+        const contribution = await Contribution.create({ user, email, name, content });
         res.status(201).json({ message: 'Contribution submitted', contribution });
     } catch (error) {
         res.status(500).json({ error: 'Failed to submit contribution' });
@@ -51,7 +51,7 @@ const approveContribution = async (req, res) => {
         }
 
         const template = await Template.push({
-            templateName: contribution.templateName,
+            name: contribution.name,
             content: contribution.content,
         });
 

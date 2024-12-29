@@ -4,7 +4,7 @@ function SignUp() {
     const { signupForm, updateSignupForm, signup } = useAuthStore();
 
     return (
-        <form onSubmit={signup} className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+        <form onSubmit={signup} className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md relative z-10">
             <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
             <div className="mb-4">
                 <input

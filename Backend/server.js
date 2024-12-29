@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
+const readmeController = require('./controllers/readmeController');
 const templateController = require('./controllers/templateController'); // Updated controller
 const userController = require('./controllers/userController');
 const cookieParser = require('cookie-parser');
@@ -12,6 +13,7 @@ const app = express();
 const authenticateToken = require('./middleware/requireAuth');
 const contributionController = require('./controllers/contributionController');
 // Middleware
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
@@ -24,6 +26,11 @@ app.post('/contributions', contributionController.submitContribution);
 app.get('/contributions', contributionController.fetchContributions);
 app.delete('/contributions/:id', contributionController.deleteContribution);
 
+app.get('/readmes', readmeController.fetchReadmes);
+app.get('/readmes/:id', readmeController.fetchReadme);
+app.post('/readmes', readmeController.createReadme);
+app.put('/readmes/:id', readmeController.updateReadme);
+app.delete('/readmes/:id', readmeController.deleteReadme);
 
 app.get('/templates', templateController.fetchTemplates);  
 app.get('/templates/:id', templateController.fetchTemplate);
@@ -37,17 +44,3 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-const allowedOrigins = [process.env.FRONTEND_URL, 'http://localhost:3000'];
-
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-};
-
-app.use(cors(corsOptions));

@@ -5,17 +5,17 @@ const contriStore = create((set) => ({
   contributions: null,
 
   createForm: {
-    name: "",
+    user: "",
     email: "",
-    templateName: "",
+    name: "",
     content: "",
   },
 
   updateForm: {
     _id: null,
-    name: "",
+    user: "",
     email: "",
-    templateName: "",
+    name: "",
     content: "",
     approved: false,
   },
@@ -39,9 +39,9 @@ const contriStore = create((set) => ({
       set({
         contributions: [...contributions, res.data.contribution],
         createForm: {
-          name: "",
+          user: "",
           email: "",
-          templateName: "",
+          name: "",
           content: "",
         },
       });
@@ -92,15 +92,15 @@ const contriStore = create((set) => ({
     e.preventDefault();
 
     const {
-      updateForm: { _id, name, email, templateName, content, approved },
+      updateForm: { _id, user, email, name, content, approved },
       contributions,
     } = contriStore.getState();
 
     try {
       const res = await api.put(`/contributions/${_id}`, {
-        name,
+        user,
         email,
-        templateName,
+        name,
         content,
         approved,
       });
@@ -113,9 +113,9 @@ const contriStore = create((set) => ({
         contributions: newContributions,
         updateForm: {
           _id: null,
-          name: "",
+          user: "",
           email: "",
-          templateName: "",
+          name: "",
           content: "",
           approved: false,
         },

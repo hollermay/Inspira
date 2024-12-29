@@ -47,11 +47,11 @@ function ContributionForm() {
         >
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="name" className="sr-only">Name</label>
+              <label htmlFor="user" className="sr-only">Name</label>
               <input
                 type="text"
-                name="name"
-                value={store.createForm.name}
+                name="user"
+                value={store.createForm.user}
                 onChange={store.updateCreateFormField}
                 placeholder="Name"
                 required
@@ -71,11 +71,11 @@ function ContributionForm() {
               />
             </div>
             <div>
-              <label htmlFor="templateName" className="sr-only">Template Name</label>
+              <label htmlFor="name" className="sr-only">Template Name</label>
               <input
                 type="text"
-                name="templateName"
-                value={store.createForm.templateName}
+                name="name"
+                value={store.createForm.name}
                 onChange={store.updateCreateFormField}
                 placeholder="Template Name"
                 required
@@ -100,6 +100,7 @@ function ContributionForm() {
             <button
               type="submit"
               disabled={loading}
+              onClick={handleSubmit}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? "Submitting..." : "Submit Contribution"}
