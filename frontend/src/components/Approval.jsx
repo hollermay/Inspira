@@ -33,7 +33,7 @@ return (
         {store.contributions && store.contributions.map((contribution) => (
             <div key={contribution._id} className="contribution bg-white shadow-md rounded-lg p-4 mb-4">
                 <h3 className="text-xl font-semibold">{contribution.name}</h3>
-                <pre className="bg-gray-600 p-2 text-gray-100">{contribution.content}</pre>
+                <pre className="bg-gray-600 p-2 text-gray-100">{contribution.content.substring(0, 100)}...</pre>
                 <p className="text-gray-600"><strong>Email:</strong> {contribution.email}</p>
                 <p className="text-gray-600"><strong>Template Name:</strong> {contribution.user}</p>
                 <p className="text-gray-600"><strong>Content:</strong></p> 
