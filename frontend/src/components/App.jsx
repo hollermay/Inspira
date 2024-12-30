@@ -8,6 +8,7 @@ import SignUp from "./SignUp";
 import ContributionForm from "./Contribute";
 import Gallery from "./Gallery";
 import SelfPage from "./SelfPage";
+import Footer from "./Footer";
 function App() {
   const { user } = useAuthStore();
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/templates/:templateId" element={<SelfPage />} />
           <Route path="*" element={<div>Page not found</div>} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }
