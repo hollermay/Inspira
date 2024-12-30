@@ -28,10 +28,6 @@ function ContributionForm() {
     <>
 
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div aria-hidden="true" className="flex absolute -top-96 start-1/2 transform -translate-x-1/2">
-                <div className="bg-gradient-to-r from-pink-400/50 to-pink-100 blur-3xl w-[25rem] h-[44rem] rotate-[-60deg] transform -translate-x-[10rem]"></div>
-                <div className="bg-gradient-to-tl from-pink-500 via-red-100 to-pink-50 blur-3xl w-[60rem] h-[50rem] rounded-full origin-top-left -rotate-12 -translate-x-[15rem]"></div>
-            </div>
       <div className="max-w-md w-full space-y-8 bg-white shadow-lg rounded-xl p-8 relative z-10">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
