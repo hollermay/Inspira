@@ -108,14 +108,6 @@ function ContributionForm() {
           </div>
         </form>
 
-        {error && (
-          <div className="mt-4 text-center">
-            <p className="text-red-500 bg-red-100 py-2 px-4 rounded">
-              {error}
-            </p>
-          </div>
-        )}
-
         {success && (
           <div className="mt-4 text-center">
             <p className="text-green-500 bg-green-100 py-2 px-4 rounded">
