@@ -1,7 +1,8 @@
 import axios from "axios";
 const URL = import.meta.env.VITE_APP_URL;
+const LOCAL = import.meta.env.LOCAL_APP_URL;
 const api = axios.create({
-    baseURL:URL,
+    baseURL:"http://localhost:3000" //URL,
 });
 
 api.interceptors.request.use((config) => {

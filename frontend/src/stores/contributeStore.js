@@ -145,6 +145,7 @@ const contriStore = create((set) => ({
       const { name, content } = contribution;
       await api.post("/templates", { name, content });  // Use api instance
       console.log("Successfully pushed to template database");
+      set({ contributions: contributions.filter((contribution) => contribution._id !== _id) });
     } else {
       console.error("Contribution not found");
     }

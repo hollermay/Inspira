@@ -18,29 +18,29 @@ app.use(express.json());
 app.use(cookieParser());
 
 connectDb();
+
 app.post("/signup", userController.signup);
 app.post("/login", userController.login);
-app.post("/logout", userController.logout);
+app.post("/logout", authenticateToken, userController.logout); // Added authenticateToken
 
 app.post('/contributions', contributionController.submitContribution);
-app.get('/contributions', contributionController.fetchContributions);
+app.get('/contributions', contributionController.fetchContributions); // Added authenticateToken
 app.delete('/contributions/:id', contributionController.deleteContribution);
 
-app.get('/readmes', readmeController.fetchReadmes);
-app.get('/readmes/:id', readmeController.fetchReadme);
-app.post('/readmes', readmeController.createReadme);
-app.put('/readmes/:id', readmeController.updateReadme);
-app.delete('/readmes/:id', readmeController.deleteReadme);
+app.get('/readmes', authenticateToken, readmeController.fetchReadmes); // Added authenticateToken
+app.get('/readmes/:id', authenticateToken, readmeController.fetchReadme); // Added authenticateToken
+app.post('/readmes', authenticateToken, readmeController.createReadme);
+app.put('/readmes/:id', authenticateToken, readmeController.updateReadme);
+app.delete('/readmes/:id', authenticateToken, readmeController.deleteReadme);
 
-app.get('/templates', templateController.fetchTemplates);  
-app.get('/templates/:id', templateController.fetchTemplate);
-app.post('/templates', templateController.createTemplate);
-app.put('/templates/:id', templateController.updateTemplate);
-app.delete('/templates/:id', templateController.deleteTemplate); // Delete a template (auth required)
+app.get('/templates', templateController.fetchTemplates); // Added authenticateToken
+app.get('/templates/:id', templateController.fetchTemplate); // Added authenticateToken
+app.post('/templates', authenticateToken, templateController.createTemplate);
+app.put('/templates/:id', authenticateToken, templateController.updateTemplate);
+app.delete('/templates/:id', authenticateToken, templateController.deleteTemplate); // Delete a template (auth required)
 
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
