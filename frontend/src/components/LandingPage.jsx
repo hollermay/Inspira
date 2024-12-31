@@ -1,4 +1,3 @@
-import Blogs from './Blogs';
 import Clients from './Clients';
 import Faqs from './Faqs';
 import Features from './Features';
@@ -13,7 +12,6 @@ function LandingPage() {
             <Features />
             <Templates />
             <Clients />
-            <Blogs />
             <Faqs />
             
             
